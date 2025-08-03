@@ -26,7 +26,6 @@ export function EthAddressInput({
   className
 }: EthAddressInputProps) {
   const [isChecking, setIsChecking] = useState(false);
-  const [isVerified, setIsVerified] = useState(false);
 
   const { textareaRef, adjustHeight } = useAutoResizeTextarea({
     minHeight: 52,
@@ -53,7 +52,6 @@ export function EthAddressInput({
       await new Promise(resolve => setTimeout(resolve, 3000));
       
       setIsChecking(false);
-      setIsVerified(true);
       onSubmit(true); // Успешная проверка
       return;
     }
@@ -77,17 +75,6 @@ export function EthAddressInput({
     onNextClick();
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.target.value;
-    onChange(e);
-    if (newValue.length <= 30) {
-      setIsVerified(false);
-    }
-    if (error) {
-      // Clear error when user starts typing
-    }
-  };
-
   return (
     <div className={cn("w-full", className)}>
       {/* Error message at top */}
@@ -107,7 +94,7 @@ export function EthAddressInput({
             "text-sm"
           )}
           value={value}
-          onChange={handleChange}
+          onChange={onChange}
           onKeyDown={(e) => {
             if (e.key === "Enter" && !e.shiftKey) {
               e.preventDefault();
@@ -123,19 +110,19 @@ export function EthAddressInput({
           {!showNextButton && (
             <SaveButton
               text={{
-                idle: "Submit",
+                idle: isChecking ? "Checking..." : "Submit",
                 saving: "Checking...",
-                saved: "Next"
+                saved: "Submit"
               }}
               onSave={handleSubmit}
-              state={isChecking ? 'saving' : (isVerified ? 'saved' : 'idle')}
+              className="ml-2 px-6 py-2 text-sm"
               disabled={isChecking}
-              className="ml-2 px-6"
+              disabled={isSubmitting}
             />
           )}
 
           {/* Next Button */}
-          {isVerified && (
+          {showNextButton && (
             <SaveButton
               text={{
                 idle: "Next",
