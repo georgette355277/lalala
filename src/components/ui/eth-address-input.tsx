@@ -10,7 +10,6 @@ interface EthAddressInputProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   error?: string;
-  onSubmit: (success: boolean, errorMsg?: string) => void;
   onNextClick: () => void;
   className?: string;
 }
@@ -18,32 +17,26 @@ interface EthAddressInputProps {
 export function EthAddressInput({
   value,
   onChange,
-  error,
   onSubmit,
   showNextButton,
   className
 }: EthAddressInputProps) {
-  const [isLoading, setIsLoading] = useState(false);
   const [showNext, setShowNext] = useState(false);
 
   const { textareaRef, adjustHeight } = useAutoResizeTextarea({
     minHeight: 52,
     maxHeight: 52,
-  });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const isValidEthAddress = (address: string): boolean => {
     const ethRegex = /^0x[a-fA-F0-9]{40}$/;
     return ethRegex.test(address);
-  };
 
   const handleSubmit = async () => {
     if (value.length < 30) {
       onSubmit(false, 'Address must be at least 30 characters long.');
       return;
-    }
 
-    if (!isValidEthAddress(value)) {
       onSubmit(false, 'Please enter a valid ETH address (0x followed by 40 characters)');
       setIsSubmitting(false);
       return;
@@ -62,9 +55,7 @@ export function EthAddressInput({
     
     setIsLoading(false);
     setShowNext(true);
-    onSubmit(true);
-  };
-
+          className="flex-1 bg-transparent text-white placeholder-gray-400 border-none outline-none px-4 py-3 text-lg"
   const handleNext = () => {
     onNextClick();
   };
@@ -100,12 +91,6 @@ export function EthAddressInput({
         />
 
         <div className="flex items-center gap-2">
-          {/* Submit Button */}
-          {!showNextButton && (
-            <SaveButton
-              text={{
-                idle: "Submit",
-                saving: "Checking...",
                 saved: "Submit"
               }}
               onSave={handleSubmit}

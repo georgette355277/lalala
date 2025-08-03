@@ -252,13 +252,6 @@ function App() {
                       value={ethAddress}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEthAddress(e.target.value)}
                       error={errorMessage}
-                      onSubmit={(success: boolean, errorMsg?: string) => {
-                        if (success) {
-                          setErrorMessage('');
-                        } else {
-                          setErrorMessage(errorMsg || 'Please enter a valid ETH address.');
-                        }
-                      }}
                       onNextClick={handleFinalNextClick}
                     />
                   </div>
