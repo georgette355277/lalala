@@ -25,6 +25,8 @@ export function EthAddressInput({
   onNextClick,
   className
 }: EthAddressInputProps) {
+  const [isChecking, setIsChecking] = useState(false);
+
   const { textareaRef, adjustHeight } = useAutoResizeTextarea({
     minHeight: 52,
     maxHeight: 52,
@@ -39,6 +41,18 @@ export function EthAddressInput({
   const handleSubmit = async () => {
     if (!value.trim()) {
       onSubmit(false, 'Please enter an ETH address.');
+      return;
+    }
+
+    // Если больше 30 символов, начинаем проверку
+    if (value.length > 30) {
+      setIsChecking(true);
+      
+      // Имитируем проверку (3 секунды)
+      await new Promise(resolve => setTimeout(resolve, 3000));
+      
+      setIsChecking(false);
+      onSubmit(true); // Успешная проверка
       return;
     }
 
@@ -96,12 +110,13 @@ export function EthAddressInput({
           {!showNextButton && (
             <SaveButton
               text={{
-                idle: "Submit",
+                idle: isChecking ? "Checking..." : "Submit",
                 saving: "Checking...",
                 saved: "Submit"
               }}
               onSave={handleSubmit}
-              className="text-sm px-4 py-2 min-w-[100px]"
+              className="ml-2 px-6 py-2 text-sm"
+              disabled={isChecking}
               disabled={isSubmitting}
             />
           )}
