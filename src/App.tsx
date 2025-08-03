@@ -43,7 +43,6 @@ function App() {
   const [showMintButton, setShowMintButton] = useState(false); // Добавлено состояние
   const checkboxOrder = [3, 1, 2, 0];
   const isMobile = useIsMobile();
-  const [isAddressSubmitting, setIsAddressSubmitting] = useState(false);
   
   // в теле компонента:
   const [isHeroSlideOpen, setIsHeroSlideOpen] = useState(false);
@@ -113,11 +112,9 @@ function App() {
     // This will be handled by the SearchComponent now
   };
   const handleFinalNextClick = () => {
-    setIsAddressSubmitting(true);
     setIsFourthModalOpen(false);
     setIsFifthModalOpen(true);
     setShowNextButton(false);
-    setIsAddressSubmitting(false);
   };
   const handleLastCard = (isLast: boolean) => {
     setShowMintButton(isLast);
@@ -255,8 +252,16 @@ function App() {
                       value={ethAddress}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEthAddress(e.target.value)}
                       error={errorMessage}
+                      onSubmit={(success: boolean, errorMsg?: string) => {
+                        if (success) {
+                          setErrorMessage('');
+                          setIsSubmitted(true);
+                        } else {
+                          setErrorMessage(errorMsg || 'Please enter a valid ETH address.');
+                        }
+                      }}
+                      showNextButton={showNextButton}
                       onNextClick={handleFinalNextClick}
-                      isSubmitting={isAddressSubmitting}
                     />
                   </div>
                 </div>

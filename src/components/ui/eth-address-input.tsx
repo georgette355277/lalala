@@ -10,30 +10,26 @@ interface EthAddressInputProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   error?: string;
-  error?: string;
-  isSubmitting?: boolean;
+  onSubmit: (success: boolean, errorMsg?: string) => void;
+  showNextButton: boolean;
   onNextClick: () => void;
   className?: string;
-  onSubmit: (success: boolean, error?: string) => void;
-  showNextButton: boolean;
 }
 
 export function EthAddressInput({
   value,
   onChange,
   error,
-  onNextClick,
-  isSubmitting = false,
+  onSubmit,
   showNextButton,
+  onNextClick,
   className
 }: EthAddressInputProps) {
-  const [showNext, setShowNext] = useState(false);
-
   const { textareaRef, adjustHeight } = useAutoResizeTextarea({
     minHeight: 52,
     maxHeight: 52,
   });
-  
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const isValidEthAddress = (address: string): boolean => {
     const ethRegex = /^0x[a-fA-F0-9]{40}$/;
@@ -41,8 +37,8 @@ export function EthAddressInput({
   };
 
   const handleSubmit = async () => {
-    if (value.length < 30) {
-      onSubmit(false, 'Address must be at least 30 characters long.');
+    if (!value.trim()) {
+      onSubmit(false, 'Please enter an ETH address.');
       return;
     }
 
@@ -57,17 +53,11 @@ export function EthAddressInput({
     setTimeout(() => {
       onSubmit(true);
       setIsSubmitting(false);
-    }, 1500);
-    setIsLoading(true);
-    
-    // Simulate checking process
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    setIsLoading(false);
-    setShowNext(true);
+    }, 2000);
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
+    await new Promise(resolve => setTimeout(resolve, 1500));
     onNextClick();
   };
 
@@ -102,6 +92,7 @@ export function EthAddressInput({
         />
 
         <div className="flex items-center gap-2">
+          {/* Submit Button */}
           {!showNextButton && (
             <SaveButton
               text={{
@@ -121,11 +112,10 @@ export function EthAddressInput({
               text={{
                 idle: "Next",
                 saving: "Loading...",
-                saved: "Next"
+                saved: "Ready!"
               }}
               onSave={handleNext}
               className="text-sm px-4 py-2 min-w-[100px]"
-              isLoading={isLoading}
             />
           )}
         </div>
