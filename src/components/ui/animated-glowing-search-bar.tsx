@@ -58,12 +58,12 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
             <p className="text-red-400 text-xs">{error}</p>
           )}
           
-          <div className="flex justify-center">
+          <div className="flex gap-2 items-center">
             {!showNextButton ? (
               <button
                 onClick={handleSubmit}
                 disabled={value.length < 30}
-                className={`px-6 py-2 rounded-lg font-medium transition-all ${
+                className={`flex-1 px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
                   value.length >= 30
                     ? 'bg-blue-600 hover:bg-blue-700 text-white cursor-pointer'
                     : 'bg-gray-600 text-gray-400 cursor-not-allowed'
@@ -74,7 +74,7 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
             ) : (
               <button
                 onClick={onNextClick}
-                className="px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium transition-all cursor-pointer"
+                className="flex-1 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md text-sm font-medium transition-all duration-200"
               >
                 Next
               </button>
