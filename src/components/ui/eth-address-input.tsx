@@ -29,8 +29,10 @@ export function EthAddressInput({
     minHeight: 52,
     maxHeight: 52,
   });
+  
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const isValidEthAddress = (address: string): boolean => {
     const ethRegex = /^0x[a-fA-F0-9]{40}$/;
