@@ -1,9 +1,5 @@
-"use client";
-
-import { useState } from "react";
-import { cn } from "@/lib/utils";
-import { Textarea } from "@/components/ui/textarea";
-import { useAutoResizeTextarea } from "@/hooks/use-auto-resize-textarea";
+import React, { useState } from 'react';
+import { cn } from '@/lib/utils';
 import { ShimmerButton } from './shimmer-button';
 
 interface EthAddressInputProps {
@@ -27,15 +23,8 @@ export function EthAddressInput({
 }: EthAddressInputProps) {
   const [isChecking, setIsChecking] = useState(false);
 
-  const { textareaRef, adjustHeight } = useAutoResizeTextarea({
-    minHeight: 52,
-    maxHeight: 52,
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
   const isValidEthAddress = (address: string): boolean => {
-    const ethRegex = /^0x[a-fA-F0-9]{40}$/;
-    return ethRegex.test(address);
+    return /^0x[a-fA-F0-9]{40}$/.test(address);
   };
 
   const handleSubmit = async () => {
@@ -44,35 +33,24 @@ export function EthAddressInput({
       return;
     }
 
-    // Если больше 30 символов, начинаем проверку
+    // Если больше 30 символов - имитируем проверку
     if (value.length > 30) {
       setIsChecking(true);
       
-      // Имитируем проверку (3 секунды)
-      await new Promise(resolve => setTimeout(resolve, 3000));
-      
-      setIsChecking(false);
-      onSubmit(true); // Успешная проверка
+      // Имитация проверки 3 секунды
+      setTimeout(() => {
+        setIsChecking(false);
+        onSubmit(true); // Всегда успешно для длинных адресов
+      }, 3000);
       return;
     }
 
-    if (!isValidEthAddress(value)) {
-      onSubmit(false, 'Please enter a valid ETH address (0x followed by 40 characters)');
-      setIsSubmitting(false);
-      return;
-    }
-
-    setIsSubmitting(true);
-    
-    setTimeout(() => {
+    // Обычная валидация для коротких адресов
+    if (isValidEthAddress(value)) {
       onSubmit(true);
-      setIsSubmitting(false);
-    }, 2000);
-  };
-
-  const handleNext = async () => {
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    onNextClick();
+    } else {
+      onSubmit(false, 'Please enter a valid ETH address.');
+    }
   };
 
   return (
@@ -83,59 +61,36 @@ export function EthAddressInput({
         </div>
       )}
       
-      <div className="flex items-center gap-2">
+      <div className="relative">
         <input
-          className={cn(
-            "flex-1 bg-transparent text-white placeholder:text-white/50",
-            "border-none outline-none px-2 py-2",
-            "text-sm"
-          )}
-          placeholder="Enter your ETH address..."
+          type="text"
           value={value}
           onChange={onChange}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" && !e.shiftKey) {
-              e.preventDefault();
-              if (!showNextButton) {
-                handleSubmit();
-              }
-            }
-          }}
+          placeholder="Enter your ETH address"
+          className="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent backdrop-blur-sm"
         />
-
-        <div className="flex items-center gap-2">
-          {/* Submit Button */}
-          {!showNextButton && (
-            <ShimmerButton
-              text={{
-                idle: isChecking ? "Checking..." : "Submit",
-                saving: "Checking...",
-                saved: "Submit"
-              }}
-              onSave={handleSubmit}
-              className="ml-2 px-6 py-2 text-sm"
-              disabled={isChecking || isSubmitting}
-            >
-              <span className="text-sm">{isChecking ? "Checking..." : "Submit"}</span>
-            </ShimmerButton>
-          )}
-
-          {/* Next Button */}
-          {showNextButton && (
-            <ShimmerButton
-              text={{
-                idle: "Next",
-                saving: "Loading...",
-                saved: "Ready!"
-              }}
-              onSave={handleNext}
-              className="w-full h-10 text-sm px-4 py-2 mt-4"
-            >
-              <span className="text-sm">Next</span>
-            </ShimmerButton>
-          )}
-        </div>
       </div>
+
+      {!showNextButton ? (
+        <ShimmerButton
+          onClick={handleSubmit}
+          disabled={isChecking}
+          className="w-full h-10 text-sm px-4 py-2"
+        >
+          <span className="relative z-10 text-white font-medium">
+            {isChecking ? 'Checking...' : 'Submit'}
+          </span>
+        </ShimmerButton>
+      ) : (
+        <ShimmerButton
+          onClick={onNextClick}
+          className="w-full h-10 text-sm px-4 py-2"
+        >
+          <span className="relative z-10 text-white font-medium">
+            Next
+          </span>
+        </ShimmerButton>
+      )}
     </div>
   );
 }
