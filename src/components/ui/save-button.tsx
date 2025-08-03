@@ -56,5 +56,6 @@ export function SaveButton({
     >
       {text[state]}
     </button>
+  )
   );
 }
