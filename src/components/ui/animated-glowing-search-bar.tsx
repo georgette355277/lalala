@@ -122,3 +122,5 @@ export function AnimatedGlowingSearchBar({ onNext }: AnimatedGlowingSearchBarPro
     </div>
   );
 }
+
+export default AnimatedGlowingSearchBar;
