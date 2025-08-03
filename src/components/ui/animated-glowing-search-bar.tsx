@@ -41,8 +41,8 @@ export function AnimatedGlowingSearchBar({ onNext }: AnimatedGlowingSearchBarPro
       >
         <div className="relative">
           <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full blur-sm"
-            animate={{
+    <div className="w-full max-w-md mx-auto">
+      <div className="relative w-full">
               scale: [1, 1.05, 1],
               opacity: [0.5, 0.8, 0.5],
             }}
@@ -52,6 +52,24 @@ export function AnimatedGlowingSearchBar({ onNext }: AnimatedGlowingSearchBarPro
               ease: "easeInOut",
             }}
           />
+          <div className="flex gap-2 mt-2 px-1">
+            {!showNextButton ? (
+              <button
+                onClick={handleSubmit}
+                disabled={isLoading || !value.trim()}
+                className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-gray-600 disabled:to-gray-700 disabled:cursor-not-allowed text-white font-medium py-2 px-4 rounded-md transition-all duration-200 text-sm"
+              >
+                {isLoading ? 'Processing...' : 'Submit'}
+              </button>
+            ) : (
+              <button
+                onClick={onNextClick}
+                className="flex-1 bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white font-medium py-2 px-4 rounded-md transition-all duration-200 text-sm"
+              >
+                Next
+              </button>
+            )}
+          </div>
           
           <div className="relative bg-black/20 backdrop-blur-sm rounded-full p-1">
             <div className="flex items-center bg-white/10 rounded-full px-4 py-3">
@@ -102,23 +120,6 @@ export function AnimatedGlowingSearchBar({ onNext }: AnimatedGlowingSearchBarPro
         ) : (
           <motion.button
             onClick={handleNext}
-            className="relative px-8 py-3 bg-gradient-to-r from-green-600 to-blue-600 text-white rounded-full font-medium overflow-hidden group"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-blue-600 to-green-600"
-              initial={{ x: '-100%' }}
-              whileHover={{ x: 0 }}
-              transition={{ duration: 0.3 }}
-            />
-            <span className="relative z-10">Next</span>
-          </motion.button>
-        )}
-      </motion.div>
     </div>
   );
 }
