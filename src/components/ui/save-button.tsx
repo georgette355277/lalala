@@ -8,7 +8,6 @@ const handleSave = async () => {
       setTimeout(() => setState('idle'), 2000);
     } catch (error) {
     }
-  };
   saved: "Saved!"
 };
 
