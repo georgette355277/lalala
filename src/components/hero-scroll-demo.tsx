@@ -8,10 +8,12 @@ export function HeroScrollDemo() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center">
+    <div className="w-full h-full flex flex-col items-center justify-center min-h-screen">
       <ContainerScroll
         titleComponent={
-          <></>
+          <div className="w-full max-w-6xl mx-auto">
+            {/* Пустой контейнер для поддержания ширины */}
+          </div>
         }
       >
         <div className="relative w-full h-full bg-black rounded-2xl overflow-hidden">
