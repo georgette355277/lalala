@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { ImageTrail } from '@/components/ui2/image-trail';
+import { ImageTrail } from '@/components/ui1/image-trail';
 import { X } from 'lucide-react';
 
 interface ImageTrailModalProps {

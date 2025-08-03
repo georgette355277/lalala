@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { ContainerScroll } from "@/components/ui2/container-scroll-animation";
-import { SplineScene } from "@/components/ui2/spline";
-import { ShinyButton } from "@/components/ui2/shiny-button";
+import { ContainerScroll } from "@/components/ui1/container-scroll-animation";
+import { SplineScene } from "@/components/ui1/spline";
+import { ShinyButton } from "@/components/ui1/shiny-button";
 import { ImageTrailModal } from "@/components/image-trail-modal";
 
 export function HeroScrollDemo() {
