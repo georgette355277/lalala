@@ -80,6 +80,14 @@ export function EthAddressInput({
           </span>
         </ShimmerButton>
       </div>
+      {showNextButton ? (
+        <ShimmerButton
+          onClick={onNextClick}
+          className="w-full h-10 text-sm px-4 py-2"
+        >
+          <span className="relative z-10 text-white font-medium">
+            Next
+          </span>
         </ShimmerButton>
       ) : (
         <ShimmerButton
