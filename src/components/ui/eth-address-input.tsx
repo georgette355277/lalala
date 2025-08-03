@@ -88,6 +88,7 @@ export function EthAddressInput({
           <span className="relative z-10 text-white font-medium">
             Next
           </span>
+        </ShimmerButton>
       ) : (
         <ShimmerButton
           onClick={onNextClick}
