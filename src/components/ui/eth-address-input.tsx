@@ -75,20 +75,22 @@ export function EthAddressInput({
     onNextClick();
   };
 
-        className="w-full h-10 text-sm px-4 py-2"
+  return (
+    <div className={cn("space-y-4", className)}>
+      {error && (
         <div className="mb-2 text-red-400 text-sm text-center animate-fade-in">
-        <span className="text-sm">
+          <span className="text-sm">{error}</span>
         </div>
       )}
-      </ShimmerButton>
-      <ShimmerButton
+      
+      <div className="flex items-center gap-2">
         <input
-        <ShimmerButton
-          placeholder="Enter your ETH address..."
+          className={cn(
             "flex-1 bg-transparent text-white placeholder:text-white/50",
             "border-none outline-none px-2 py-2",
             "text-sm"
           )}
+          placeholder="Enter your ETH address..."
           value={value}
           onChange={onChange}
           onKeyDown={(e) => {
@@ -104,7 +106,7 @@ export function EthAddressInput({
         <div className="flex items-center gap-2">
           {/* Submit Button */}
           {!showNextButton && (
-            <SaveButton
+            <ShimmerButton
               text={{
                 idle: isChecking ? "Checking..." : "Submit",
                 saving: "Checking...",
@@ -112,22 +114,27 @@ export function EthAddressInput({
               }}
               onSave={handleSubmit}
               className="ml-2 px-6 py-2 text-sm"
-              disabled={isChecking}
-              disabled={isSubmitting}
-            />
+              disabled={isChecking || isSubmitting}
+            >
+              <span className="text-sm">{isChecking ? "Checking..." : "Submit"}</span>
+            </ShimmerButton>
           )}
 
           {/* Next Button */}
           {showNextButton && (
-            <SaveButton
+            <ShimmerButton
               text={{
                 idle: "Next",
                 saving: "Loading...",
                 saved: "Ready!"
-          className="w-full h-10 text-sm px-4 py-2 mt-4"
-            />
-          <span className="text-sm">Next</span>
-        </ShimmerButton>
+              }}
+              onSave={handleNext}
+              className="w-full h-10 text-sm px-4 py-2 mt-4"
+            >
+              <span className="text-sm">Next</span>
+            </ShimmerButton>
+          )}
+        </div>
       </div>
     </div>
   );
