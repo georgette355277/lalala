@@ -31,8 +31,7 @@ export function EthAddressInput({
   });
   
   const [isSubmitting, setIsSubmitting] = useState(false);
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const isValidEthAddress = (address: string): boolean => {
     const ethRegex = /^0x[a-fA-F0-9]{40}$/;
