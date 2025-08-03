@@ -1,6 +1,5 @@
 import React from 'react';
 import { Loader2 } from 'lucide-react';
-import { supabase } from '@/supabaseClient';
 
 interface SearchComponentProps {
   value: string;
@@ -28,19 +27,12 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
     }
     
     setIsLoading(true);
-    const { error } = await supabase
-      .from('eth_addresses')
-      .insert({ address: value });
     
-    setIsLoading(false);
-    
-    if (error) {
-      console.error('Ошибка при сохранении адреса:', error.message);
-      onSubmit(false, 'Failed to save address.');
-    } else {
-      console.log('Адрес успешно сохранен:', value);
+    // Simulate processing for 5 seconds
+    setTimeout(() => {
+      setIsLoading(false);
       onSubmit(true);
-    }
+    }, 5000);
   };
 
   return (
