@@ -79,6 +79,7 @@ export default {
         'accordion-up': 'accordion-up 0.2s ease-out',
         flip: "flip 6s infinite steps(2, end)",
         rotate: "rotate 3s linear infinite both",
+        spotlight: "spotlight 2s ease .75s 1 forwards",
       },
       keyframes: {
         flip: {
@@ -86,6 +87,16 @@ export default {
         },
         rotate: {
           to: { transform: "rotate(90deg)" },
+        },
+        spotlight: {
+          "0%": {
+            opacity: 0,
+            transform: "translate(-72%, -62%) scale(0.5)",
+          },
+          "100%": {
+            opacity: 1,
+            transform: "translate(-50%,-40%) scale(1)",
+          },
         },
       },
     },
