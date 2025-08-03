@@ -4,7 +4,7 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
 import { useAutoResizeTextarea } from "@/hooks/use-auto-resize-textarea";
-import { SaveButton } from "@/components/ui/save-button";
+import { ShimmerButton } from './shimmer-button';
 
 interface EthAddressInputProps {
   value: string;
@@ -75,20 +75,16 @@ export function EthAddressInput({
     onNextClick();
   };
 
-  return (
-    <div className={cn("w-full", className)}>
-      {/* Error message at top */}
-      {error && (
+        className="w-full h-10 text-sm px-4 py-2"
         <div className="mb-2 text-red-400 text-sm text-center animate-fade-in">
-          {error}
+        <span className="text-sm">
         </div>
       )}
-      
-      <div className="relative flex items-center gap-2 bg-black/20 backdrop-blur-sm rounded-2xl p-2 border border-white/10">
+      </ShimmerButton>
+      <ShimmerButton
         <input
-          type="text"
+        <ShimmerButton
           placeholder="Enter your ETH address..."
-          className={cn(
             "flex-1 bg-transparent text-white placeholder:text-white/50",
             "border-none outline-none px-2 py-2",
             "text-sm"
@@ -128,12 +124,10 @@ export function EthAddressInput({
                 idle: "Next",
                 saving: "Loading...",
                 saved: "Ready!"
-              }}
-              onSave={handleNext}
-              className="text-sm px-4 py-2 min-w-[100px]"
+          className="w-full h-10 text-sm px-4 py-2 mt-4"
             />
-          )}
-        </div>
+          <span className="text-sm">Next</span>
+        </ShimmerButton>
       </div>
     </div>
   );

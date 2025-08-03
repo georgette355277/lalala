@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { cn } from '@/lib/utils';
+import { ShimmerButton } from './shimmer-button';
 
 interface SaveButtonProps {
   text?: {
@@ -54,15 +54,12 @@ export function SaveButton({
   };
 
   return (
-    <button
-      onClick={handleClick}
+    <ShimmerButton
+      onClick={handleClick} 
       disabled={state === 'saving'}
-      className={cn(
-        "interact-button flex h-full w-full items-center justify-center text-white",
-        className
-      )}
+      className={className}
     >
       <span className="text-[1.125rem]">{getCurrentText()}</span>
-    </button>
+    </ShimmerButton>
   );
 }
