@@ -12,8 +12,6 @@ import SearchComponent from '@/components/ui1/animated-glowing-search-bar';
 import { HeroScrollDemo } from '@/components/hero-scroll-demo';
 import "./App.css";
 
-
-
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(false);
 
