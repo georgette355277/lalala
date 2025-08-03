@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { ThemeProvider } from '@/components/theme-provider';
-import { SaveButton } from '@/components/ui1/save-button';
-import { Dialog, DialogContent, DialogTitle } from '@/components/ui1/dialog';
-import { ParticleTextEffect } from '@/components/ui1/particle-text-effect';
-import { MatrixText } from '@/components/ui1/matrix-text';
-import { CheckBox } from '@/components/ui1/checkbox';
-import { InteractiveRobotSpline } from '@/components/ui1/interactive-3d-robot';
-import { Typewriter } from '@/components/ui1/typewriter-text';
-import { AnimatedTestimonials } from '@/components/ui1/animated-testimonials';
-import SearchComponent from '@/components/ui1/animated-glowing-search-bar';
+import { SaveButton } from '@/components/ui/save-button';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
+import { ParticleTextEffect } from '@/components/ui/particle-text-effect';
+import { MatrixText } from '@/components/ui/matrix-text';
+import { CheckBox } from '@/components/ui/checkbox';
+import { InteractiveRobotSpline } from '@/components/ui/interactive-3d-robot';
+import { Typewriter } from '@/components/ui/typewriter-text';
+import { AnimatedTestimonials } from '@/components/ui/animated-testimonials';
+import SearchComponent from '@/components/ui/animated-glowing-search-bar';
 import { HeroScrollDemo } from '@/components/hero-scroll-demo';
 import "./App.css";
 
