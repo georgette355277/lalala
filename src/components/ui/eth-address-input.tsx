@@ -31,7 +31,7 @@ export function EthAddressInput({
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const validateEthAddress = (address: string): boolean => {
+  const isValidEthAddress = (address: string): boolean => {
     const ethRegex = /^0x[a-fA-F0-9]{40}$/;
     return ethRegex.test(address);
   };
@@ -42,18 +42,18 @@ export function EthAddressInput({
       return;
     }
 
-    if (!validateEthAddress(value)) {
-      onSubmit(false, 'Please enter a valid ETH address.');
+    if (!isValidEthAddress(value)) {
+      onSubmit(false, 'Please enter a valid ETH address (0x followed by 40 characters)');
+      setIsSubmitting(false);
       return;
     }
 
     setIsSubmitting(true);
     
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    setIsSubmitting(false);
-    onSubmit(true);
+    setTimeout(() => {
+      onSubmit(true);
+      setIsSubmitting(false);
+    }, 2000);
   };
 
   const handleNext = async () => {
@@ -63,75 +63,63 @@ export function EthAddressInput({
 
   return (
     <div className={cn("w-full", className)}>
-      <div className="flex items-center gap-3 w-full">
-        {/* Input */}
-        <div className="flex-1 relative">
-          <Textarea
-            placeholder="Enter your ETH address..."
-            className={cn(
-              "bg-black/20 dark:bg-white/10 rounded-2xl px-4 py-3",
-              "placeholder:text-white/50",
-              "border border-white/20 ring-white/20",
-              "text-white text-wrap",
-              "overflow-y-hidden resize-none",
-              "focus-visible:ring-1 focus-visible:ring-white/30 focus-visible:ring-offset-0",
-              "transition-all duration-200",
-              "leading-[1.2]",
-              "min-h-[52px] max-h-[52px]",
-              "[&::-webkit-resizer]:hidden",
-              error && "border-red-500/50 ring-red-500/20"
-            )}
-            ref={textareaRef}
-            value={value}
-            onChange={(e: any) => {
-              onChange(e);
-              adjustHeight();
-            }}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && !e.shiftKey) {
-                e.preventDefault();
-                if (!showNextButton) {
-                  handleSubmit();
-                }
-              }
-            }}
-          />
-        </div>
-
-        {/* Submit Button */}
-        {!showNextButton && (
-          <SaveButton
-            text={{
-              idle: "Submit",
-              saving: "Checking...",
-              saved: "Checked!"
-            }}
-            onSave={handleSubmit}
-            className="px-6 py-3 text-sm whitespace-nowrap"
-            disabled={isSubmitting}
-          />
-        )}
-
-        {/* Next Button */}
-        {showNextButton && (
-          <SaveButton
-            text={{
-              idle: "Next",
-              saving: "Loading...",
-              saved: "Ready!"
-            }}
-            onSave={handleNext}
-            className="px-6 py-3 text-sm whitespace-nowrap"
-          />
-        )}
-      </div>
-
-      {/* Error Message */}
+      {/* Error message at top */}
       {error && (
-        <p className="text-red-400 text-sm mt-2 text-center">
+        <div className="mb-2 text-red-400 text-sm text-center animate-fade-in">
           {error}
-        </p>
+        </div>
       )}
+      
+      <div className="relative flex items-center gap-2 bg-black/20 backdrop-blur-sm rounded-2xl p-2 border border-white/10">
+        <input
+          type="text"
+          placeholder="Enter your ETH address..."
+          className={cn(
+            "flex-1 bg-transparent text-white placeholder:text-white/50",
+            "border-none outline-none px-2 py-2",
+            "text-sm"
+          )}
+          value={value}
+          onChange={onChange}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              if (!showNextButton) {
+                handleSubmit();
+              }
+            }
+          }}
+        />
+
+        <div className="flex items-center gap-2">
+          {/* Submit Button */}
+          {!showNextButton && (
+            <SaveButton
+              text={{
+                idle: "Submit",
+                saving: "Checking...",
+                saved: "Submit"
+              }}
+              onSave={handleSubmit}
+              className="text-sm px-4 py-2 min-w-[100px]"
+              disabled={isSubmitting}
+            />
+          )}
+
+          {/* Next Button */}
+          {showNextButton && (
+            <SaveButton
+              text={{
+                idle: "Next",
+                saving: "Loading...",
+                saved: "Ready!"
+              }}
+              onSave={handleNext}
+              className="text-sm px-4 py-2 min-w-[100px]"
+            />
+          )}
+        </div>
+      </div>
     </div>
   );
 }
