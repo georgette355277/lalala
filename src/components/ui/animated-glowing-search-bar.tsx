@@ -49,9 +49,11 @@ export function AnimatedGlowingSearchBar({ onNext }: AnimatedGlowingSearchBarPro
             transition={{
               duration: 2,
               repeat: Infinity,
-              ease: "easeInOut",
+              ease: "easeInOut"
             }}
-          />
+            className="w-full max-w-md mx-auto"
+          >
+            <div className="relative w-full">
           
           <div className="relative bg-black/20 backdrop-blur-sm rounded-full p-1">
             <div className="flex items-center bg-white/10 rounded-full px-4 py-3">
