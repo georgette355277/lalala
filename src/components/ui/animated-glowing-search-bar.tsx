@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
 interface SearchComponentProps {
@@ -18,11 +18,19 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
   showNextButton,
   onNextClick,
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleSubmit = () => {
     console.log("Submit clicked, value length:", value.length);
     if (value.length >= 30) {
       console.log("Validation passed, calling onSubmit(true)");
+      setIsLoading(true);
       onSubmit(true);
+      
+      // Hide loading after 3 seconds
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 3000);
     } else {
       console.log("Validation failed, calling onSubmit(false)");
       onSubmit(false, "Please enter a valid ETH address.");
@@ -69,7 +77,14 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
                     : 'bg-gray-600 text-gray-400 cursor-not-allowed'
                 }`}
               >
-                Submit
+                {isLoading ? (
+                  <div className="flex items-center justify-center gap-2">
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    Verifying...
+                  </div>
+                ) : (
+                  'Submit'
+                )}
               </button>
             ) : (
               <button
