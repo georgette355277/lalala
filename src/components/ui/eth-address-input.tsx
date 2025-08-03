@@ -78,7 +78,6 @@ export function EthAddressInput({
   return (
     <div className={cn("space-y-4", className)}>
       {error && (
-      >
         <div className="mb-2 text-red-400 text-sm text-center animate-fade-in">
           <span className="text-sm">{error}</span>
         </div>
