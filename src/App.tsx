@@ -340,14 +340,6 @@ function App() {
       {/* если есть компонент описания: */}
       {/* <DialogDescription className="sr-only">Финальный слайд перед mint</DialogDescription> */}
       <HeroScrollDemo />
-      {/* кнопка закрытия, если нужно явное управление */}
-      <button
-        aria-label="Close"
-        onClick={() => setIsHeroSlideOpen(false)}
-        className="absolute top-4 right-4 p-2 bg-black/50 rounded"
-      >
-        ✕
-      </button>
     </div>
   </DialogContent>
 </Dialog>
