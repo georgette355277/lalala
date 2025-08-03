@@ -27,11 +27,15 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
   };
 
   const handleSubmit = () => {
-    if (isLoading) return;
-
-    if (!value.trim()) {
-      onSubmit(false, 'Please enter an ETH address.');
-      return;
+    console.log('Submit clicked, value length:', value.length);
+    
+    if (value.length >= 30) {
+      console.log('Validation passed, calling onSubmit(true)');
+      onSubmit(true);
+    } else {
+      console.log('Validation failed, calling onSubmit(false)');
+      onSubmit(false, 'Please enter a valid ETH address (minimum 30 characters).');
+    }
     }
 
     if (!isValidEthAddress(value)) {
