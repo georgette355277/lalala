@@ -61,25 +61,25 @@ export function EthAddressInput({
         </div>
       )}
       
-      <div className="relative">
+      <div className="flex gap-2 items-center">
         <input
           type="text"
           value={value}
           onChange={onChange}
           placeholder="Enter your ETH address"
-          className="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent backdrop-blur-sm"
+          className="flex-1 px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
         />
-      </div>
-
-      {!showNextButton ? (
+        
         <ShimmerButton
           onClick={handleSubmit}
           disabled={isChecking}
-          className="w-full h-10 text-sm px-4 py-2"
+          className="h-12 text-sm px-6 py-3 flex-shrink-0"
         >
           <span className="relative z-10 text-white font-medium">
-            {isChecking ? 'Checking...' : 'Submit'}
+            {isChecking ? 'Checking...' : (showNextButton ? 'Next' : 'Submit')}
           </span>
+        </ShimmerButton>
+      </div>
         </ShimmerButton>
       ) : (
         <ShimmerButton
