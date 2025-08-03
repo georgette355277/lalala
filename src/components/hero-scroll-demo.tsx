@@ -8,7 +8,7 @@ export function HeroScrollDemo() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <div className="w-full flex flex-col items-center justify-center">
+    <div className="w-full h-full flex flex-col items-center justify-center">
       <ContainerScroll
         titleComponent={
           <h1 className="text-4xl font-semibold text-black dark:text-white text-center">
@@ -17,12 +17,12 @@ export function HeroScrollDemo() {
           </h1>
         }
       >
-        <div className="relative w-full h-full bg-black rounded-2xl border border-gray-800 shadow-2xl overflow-hidden">
+        <div className="relative w-full h-full bg-black rounded-2xl border border-gray-800 shadow-2xl overflow-hidden min-h-[80vh]">
           <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-purple-900/20 to-pink-900/20 z-10 pointer-events-none" />
           
           <SplineScene 
             scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-            className="w-full h-full relative z-20 min-w-[320px] min-h-[400px] md:min-w-[800px] md:min-h-[600px]"
+            className="w-full h-full relative z-20"
           />
           
           <div className="absolute bottom-4 left-4 md:bottom-6 md:left-6 z-30">
