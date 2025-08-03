@@ -1,125 +1,124 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Search, Loader2 } from 'lucide-react';
+import { Search, CheckCircle } from 'lucide-react';
 
-interface AnimatedGlowingSearchBarProps {
-  onNext?: () => void;
+interface SearchComponentProps {
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  error: string;
+  onSubmit: (success: boolean, errorMsg?: string) => void;
+  showNextButton: boolean;
+  onNextClick: () => void;
 }
 
-export function AnimatedGlowingSearchBar({ onNext }: AnimatedGlowingSearchBarProps) {
-  const [address, setAddress] = useState('');
+const SearchComponent: React.FC<SearchComponentProps> = ({
+  value,
+  onChange,
+  error,
+  onSubmit,
+  showNextButton,
+  onNextClick
+}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [showNext, setShowNext] = useState(false);
+
+  const isValidEthAddress = (address: string): boolean => {
+    return /^0x[a-fA-F0-9]{40}$/.test(address);
+  };
 
   const handleSubmit = () => {
     if (isLoading) return;
-    
+
+    if (!value.trim()) {
+      onSubmit(false, 'Please enter an ETH address.');
+      return;
+    }
+
+    if (!isValidEthAddress(value)) {
+      onSubmit(false, 'Please enter a valid ETH address.');
+      return;
+    }
+
     setIsLoading(true);
-    setIsSubmitted(true);
     
-    // Show Next button after 5 seconds
     setTimeout(() => {
       setIsLoading(false);
-      setShowNext(true);
-    }, 5000);
-  };
-
-  const handleNext = () => {
-    if (onNext) {
-      onNext();
-    }
+      setIsSubmitted(true);
+      onSubmit(true);
+    }, 3000);
   };
 
   return (
-    <div className="flex flex-col items-center space-y-6">
-      <motion.div
-        className="relative w-full max-w-md"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
-        <div className="relative">
-          <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full blur-lg"
-            animate={{
-              scale: [1, 1.05, 1],
-              opacity: [0.5, 0.8, 0.5],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-            className="w-full max-w-md mx-auto"
-          >
-            <div className="relative w-full">
-          
-          <div className="relative bg-black/20 backdrop-blur-sm rounded-full p-1">
-            <div className="flex items-center bg-white/10 rounded-full px-4 py-3">
-              <Search className="w-5 h-5 text-white/70 mr-3" />
-              <input
-                type="text"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                placeholder="Enter ETH address..."
-                className="flex-1 bg-transparent text-white placeholder-white/50 outline-none text-sm"
-                disabled={isLoading || showNext}
-              />
+    <div className="w-full max-w-md mx-auto">
+      <div className="relative w-full">
+        <motion.div
+          animate={{
+            scale: [1, 1.05, 1],
+            opacity: [0.5, 0.8, 0.5],
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 rounded-lg blur-xl"
+        />
+        
+        <div className="relative bg-black/40 backdrop-blur-sm border border-white/20 rounded-lg p-4 space-y-4">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <input
+              type="text"
+              value={value}
+              onChange={onChange}
+              placeholder="Enter your ETH address"
+              className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-transparent transition-all duration-200"
+              disabled={isLoading || isSubmitted}
+            />
+          </div>
+
+          {error && (
+            <div className="text-red-400 text-sm text-center">
+              {error}
             </div>
+          )}
+
+          {isLoading && (
+            <div className="flex items-center justify-center space-x-2 text-blue-400">
+              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-400"></div>
+              <span className="text-sm">Checking address...</span>
+            </div>
+          )}
+
+          {isSubmitted && (
+            <div className="flex items-center justify-center space-x-2 text-green-400">
+              <CheckCircle className="w-4 h-4" />
+              <span className="text-sm">Address verified!</span>
+            </div>
+          )}
+
+          <div className="flex justify-center">
+            {!showNextButton ? (
+              <button
+                onClick={handleSubmit}
+                disabled={isLoading || isSubmitted}
+                className="px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-md hover:from-blue-600 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 font-medium"
+              >
+                {isLoading ? 'Checking...' : 'Submit'}
+              </button>
+            ) : (
+              <button
+                onClick={onNextClick}
+                className="px-6 py-2 bg-gradient-to-r from-green-500 to-blue-600 text-white rounded-md hover:from-green-600 hover:to-blue-700 transition-all duration-200 font-medium"
+              >
+                Next
+              </button>
+            )}
           </div>
         </div>
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.3, duration: 0.6 }}
-      >
-        {!showNext ? (
-          <motion.button
-            onClick={handleSubmit}
-            disabled={isLoading || !address.trim()}
-            className="relative px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full font-medium disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden group"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600"
-              initial={{ x: '-100%' }}
-              whileHover={{ x: 0 }}
-              transition={{ duration: 0.3 }}
-            />
-            <span className="relative z-10 flex items-center">
-              {isLoading ? (
-                <>
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  Loading...
-                </>
-              ) : (
-                'Submit'
-              )}
-            </span>
-          </motion.button>
-        ) : (
-          <motion.button
-            onClick={handleNext}
-            className="relative px-8 py-3 bg-gradient-to-r from-green-600 to-blue-600 text-white rounded-full font-medium overflow-hidden group"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-blue-600 to-green-600"
-              initial={{ x: '-100%' }}
-              whileHover={{ x: 0 }}
-              transition={{ duration: 0.3 }}
-            />
-            <span className="relative z-10">Next</span>
-          </motion.button>
-        )}
-      </motion.div>
+      </div>
     </div>
   );
-}
+};
 
-export default AnimatedGlowingSearchBar;
+export default SearchComponent;
