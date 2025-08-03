@@ -80,6 +80,7 @@ export default {
         flip: "flip 6s infinite steps(2, end)",
         rotate: "rotate 3s linear infinite both",
         spotlight: "spotlight 2s ease .75s 1 forwards",
+        'fade-scale': 'fade-scale 0.2s ease-out'
       },
       keyframes: {
         flip: {
@@ -98,6 +99,16 @@ export default {
             transform: "translate(-50%,-40%) scale(1)",
           },
         },
+        'fade-scale': {
+          '0%': { 
+            opacity: '0',
+            transform: 'translateY(-50%) scale(0.95)'
+          },
+          '100%': { 
+            opacity: '1',
+            transform: 'translateY(-50%) scale(1)'
+          }
+        }
       },
     },
   },

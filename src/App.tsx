@@ -8,7 +8,7 @@ import { CheckBox } from '@/components/ui/checkbox';
 import { InteractiveRobotSpline } from '@/components/ui/interactive-3d-robot';
 import { Typewriter } from '@/components/ui/typewriter-text';
 import { AnimatedTestimonials } from '@/components/ui/animated-testimonials';
-import SearchComponent from '@/components/ui/animated-glowing-search-bar';
+import { EthAddressInput } from '@/components/ui/eth-address-input';
 import { HeroScrollDemo } from '@/components/hero-scroll-demo';
 import "./App.css";
 
@@ -248,7 +248,7 @@ function App() {
                     </div>
                   </div>
                   <div className={`z-[100] pointer-events-auto absolute ${isMobile ? 'bottom-3' : 'bottom-6'} left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-4 ${isMobile ? 'w-[90vw] max-w-[400px]' : 'w-[400px]'}`}>
-                    <SearchComponent
+                    <EthAddressInput
                       value={ethAddress}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEthAddress(e.target.value)}
                       error={errorMessage}
