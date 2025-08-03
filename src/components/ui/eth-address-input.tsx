@@ -23,7 +23,7 @@ export function EthAddressInput({
   onChange,
   error,
   onNextClick,
-  isSubmitting = false
+  isSubmitting = false,
   showNextButton,
   className
 }: EthAddressInputProps) {
