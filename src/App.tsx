@@ -41,6 +41,7 @@ function App() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showNextButton, setShowNextButton] = useState(false);
   const [showMintButton, setShowMintButton] = useState(false); // Добавлено состояние
+  const [showEthInput, setShowEthInput] = useState(false);
   const checkboxOrder = [3, 1, 2, 0];
   const isMobile = useIsMobile();
   
@@ -107,7 +108,9 @@ function App() {
       return newStates;
     });
   };
-  const handleTypewriterComplete = () => {};
+  const handleTypewriterComplete = () => {
+    setShowEthInput(true);
+  };
   const handleAddressSubmit = () => {
     // This will be handled by the SearchComponent now
   };
@@ -248,6 +251,7 @@ function App() {
                     </div>
                   </div>
                   <div className={`z-[100] pointer-events-auto absolute ${isMobile ? 'bottom-3' : 'bottom-6'} left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-4 ${isMobile ? 'w-[90vw] max-w-[400px]' : 'w-[400px]'}`}>
+                    {showEthInput && (
                     <EthAddressInput
                       value={ethAddress}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEthAddress(e.target.value)}
@@ -263,6 +267,7 @@ function App() {
                       showNextButton={showNextButton}
                       onNextClick={handleFinalNextClick}
                     />
+                    )}
                   </div>
                 </div>
               </div>
