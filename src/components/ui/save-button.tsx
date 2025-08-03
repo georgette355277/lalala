@@ -14,9 +14,9 @@ interface SaveButtonProps {
 
 export function SaveButton({
   text = {
-    idle: "Save",
-    saving: "Saving...",
-    saved: "Saved!"
+    idle: 'Save',
+    saving: 'Saving...',
+    saved: 'Saved!'
   },
   onSave,
   className,
@@ -25,7 +25,7 @@ export function SaveButton({
   const [state, setState] = useState<'idle' | 'saving' | 'saved'>('idle');
 
   const handleClick = async () => {
-    if (disabled || state !== 'idle') return;
+    if (state === 'saving' || disabled) return;
     
     setState('saving');
     
@@ -42,20 +42,27 @@ export function SaveButton({
     }
   };
 
+  const getCurrentText = () => {
+    switch (state) {
+      case 'saving':
+        return text.saving;
+      case 'saved':
+        return text.saved;
+      default:
+        return text.idle;
+    }
+  };
+
   return (
     <button
       onClick={handleClick}
-      disabled={disabled || state === 'saving'}
-    <button 
-      onClick={handleClick}
       disabled={state === 'saving'}
       className={cn(
-        "interact-button",
+        "interact-button flex h-full w-full items-center justify-center text-white",
         className
       )}
     >
-      {text[state]}
+      <span className="text-[1.125rem]">{getCurrentText()}</span>
     </button>
-  )
   );
 }
