@@ -8,7 +8,7 @@ import { CheckBox } from '@/components/ui/checkbox';
 import { InteractiveRobotSpline } from '@/components/ui/interactive-3d-robot';
 import { Typewriter } from '@/components/ui/typewriter-text';
 import { AnimatedTestimonials } from '@/components/ui/animated-testimonials';
-import SearchComponent from '@/components/ui/animated-glowing-search-bar';
+import { SearchComponent } from '@/components/ui/animated-glowing-search-bar';
 import { HeroScrollDemo } from '@/components/hero-scroll-demo';
 import "./App.css";
 
