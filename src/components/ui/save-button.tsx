@@ -9,6 +9,8 @@ const handleSave = async () => {
     } catch (error) {
     }
   };
+  saved: "Saved!"
+};
 
 export function SaveButton({
   text = {
