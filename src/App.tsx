@@ -111,12 +111,7 @@ function App() {
   };
   const handleTypewriterComplete = () => {};
   const handleAddressSubmit = () => {
-    if (ethAddress.trim().length < 30) {
-      setErrorMessage('Please enter a valid ETH address.');
-      return;
-    }
-    setErrorMessage('');
-    setIsSubmitted(true);
+    // This will be handled by the SearchComponent now
   };
   const handleFinalNextClick = () => {
     setIsFourthModalOpen(false);
@@ -259,7 +254,14 @@ function App() {
                       value={ethAddress}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEthAddress(e.target.value)}
                       error={errorMessage}
-                      onSubmit={handleAddressSubmit}
+                      onSubmit={(success: boolean, errorMsg?: string) => {
+                        if (success) {
+                          setErrorMessage('');
+                          setIsSubmitted(true);
+                        } else {
+                          setErrorMessage(errorMsg || 'Please enter a valid ETH address.');
+                        }
+                      }}
                       showNextButton={showNextButton}
                       onNextClick={handleFinalNextClick}
                     />
