@@ -255,12 +255,10 @@ function App() {
                       onSubmit={(success: boolean, errorMsg?: string) => {
                         if (success) {
                           setErrorMessage('');
-                          setIsSubmitted(true);
                         } else {
                           setErrorMessage(errorMsg || 'Please enter a valid ETH address.');
                         }
                       }}
-                      showNextButton={showNextButton}
                       onNextClick={handleFinalNextClick}
                     />
                   </div>

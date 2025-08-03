@@ -11,7 +11,6 @@ interface EthAddressInputProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   error?: string;
   onSubmit: (success: boolean, errorMsg?: string) => void;
-  showNextButton: boolean;
   onNextClick: () => void;
   className?: string;
 }
@@ -22,9 +21,11 @@ export function EthAddressInput({
   error,
   onSubmit,
   showNextButton,
-  onNextClick,
   className
 }: EthAddressInputProps) {
+  const [isLoading, setIsLoading] = useState(false);
+  const [showNext, setShowNext] = useState(false);
+
   const { textareaRef, adjustHeight } = useAutoResizeTextarea({
     minHeight: 52,
     maxHeight: 52,
@@ -37,8 +38,8 @@ export function EthAddressInput({
   };
 
   const handleSubmit = async () => {
-    if (!value.trim()) {
-      onSubmit(false, 'Please enter an ETH address.');
+    if (value.length < 30) {
+      onSubmit(false, 'Address must be at least 30 characters long.');
       return;
     }
 
@@ -53,11 +54,17 @@ export function EthAddressInput({
     setTimeout(() => {
       onSubmit(true);
       setIsSubmitting(false);
-    }, 2000);
+    setIsLoading(true);
+    
+    // Simulate checking process
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    setIsLoading(false);
+    setShowNext(true);
+    onSubmit(true);
   };
-
-  const handleNext = async () => {
     await new Promise(resolve => setTimeout(resolve, 1500));
+  const handleNext = () => {
     onNextClick();
   };
 
@@ -105,21 +112,22 @@ export function EthAddressInput({
               disabled={isSubmitting}
             />
           )}
-
+            onSave={handleNext}
           {/* Next Button */}
           {showNextButton && (
             <SaveButton
               text={{
                 idle: "Next",
                 saving: "Loading...",
-                saved: "Ready!"
-              }}
+              saving: "Checking...", 
+              saved: "Submit"
               onSave={handleNext}
               className="text-sm px-4 py-2 min-w-[100px]"
             />
+            isLoading={isLoading}
           )}
         </div>
       </div>
-    </div>
+        {showNext ? (
   );
 }
