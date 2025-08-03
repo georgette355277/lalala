@@ -54,6 +54,7 @@ export function EthAddressInput({
     setTimeout(() => {
       onSubmit(true);
       setIsSubmitting(false);
+    }, 1500);
     setIsLoading(true);
     
     // Simulate checking process
@@ -63,7 +64,7 @@ export function EthAddressInput({
     setShowNext(true);
     onSubmit(true);
   };
-    await new Promise(resolve => setTimeout(resolve, 1500));
+
   const handleNext = () => {
     onNextClick();
   };
@@ -112,22 +113,22 @@ export function EthAddressInput({
               disabled={isSubmitting}
             />
           )}
-            onSave={handleNext}
+
           {/* Next Button */}
           {showNextButton && (
             <SaveButton
               text={{
                 idle: "Next",
                 saving: "Loading...",
-              saving: "Checking...", 
-              saved: "Submit"
+                saved: "Next"
+              }}
               onSave={handleNext}
               className="text-sm px-4 py-2 min-w-[100px]"
+              isLoading={isLoading}
             />
-            isLoading={isLoading}
           )}
         </div>
       </div>
-        {showNext ? (
+    </div>
   );
 }
