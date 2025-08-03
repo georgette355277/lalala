@@ -36,7 +36,6 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
       console.log('Validation failed, calling onSubmit(false)');
       onSubmit(false, 'Please enter a valid ETH address (minimum 30 characters).');
     }
-    }
 
     if (!isValidEthAddress(value)) {
       onSubmit(false, 'Please enter a valid ETH address.');
