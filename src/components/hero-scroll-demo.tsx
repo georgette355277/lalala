@@ -11,21 +11,16 @@ export function HeroScrollDemo() {
     <div className="w-full h-full flex flex-col items-center justify-center">
       <ContainerScroll
         titleComponent={
-          <h1 className="text-4xl font-semibold text-black dark:text-white text-center">
-            <span className="text-3xl sm:text-4xl md:text-[6rem] font-bold mt-1 leading-none">
-            </span>
-          </h1>
+          <></>
         }
       >
-        <div className="relative w-full h-full bg-black rounded-2xl border border-gray-800 shadow-2xl overflow-hidden min-h-[80vh]">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-purple-900/20 to-pink-900/20 z-10 pointer-events-none" />
-          
+        <div className="relative w-full h-full bg-black rounded-2xl overflow-hidden">
           <SplineScene 
             scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-            className="w-full h-full absolute inset-0 z-20"
+            className="w-full h-full absolute inset-0"
           />
           
-          <div className="absolute bottom-4 left-4 md:bottom-6 md:left-6 z-30">
+          <div className="absolute bottom-4 left-4 md:bottom-6 md:left-6 z-10">
             <ShinyButton onClick={() => setIsModalOpen(true)}>
               Mint
             </ShinyButton>
