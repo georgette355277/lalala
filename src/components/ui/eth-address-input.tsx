@@ -10,6 +10,7 @@ interface EthAddressInputProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   error?: string;
+  error?: string;
   onNextClick: () => void;
   className?: string;
   onSubmit: (success: boolean, error?: string) => void;
@@ -19,6 +20,7 @@ interface EthAddressInputProps {
 export function EthAddressInput({
   value,
   onChange,
+  error,
   onSubmit,
   showNextButton,
   className
