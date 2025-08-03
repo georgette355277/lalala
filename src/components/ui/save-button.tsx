@@ -14,8 +14,7 @@ export function SaveButton({
   text = {
     idle: "Save",
     saving: "Saving...",
-export function SaveButton({
-  text,
+  },
   onSave,
   className = "",
   ...props
